@@ -75,8 +75,10 @@ function Navigation (){
                 <Stack.Screen name="Login" component={LoginScreen} options={{headerShown:false}}/>
                 <Stack.Screen name="Main" component={BottomTabs} options={{headerShown:false}}/>
                 <Stack.Screen name="Liked" component={LikedSongsSreen} options={{headerShown:false}}/>
-                <Stack.Screen name="Login" component={SonginfoScreen} options={{headerShown:false}}/>
+                <Stack.Screen name="Info" component={SonginfoScreen} options={{headerShown:false}}/>
             </Stack.Navigator>
         </NavigationContainer>
     )
 }
+
+export default Navigation
