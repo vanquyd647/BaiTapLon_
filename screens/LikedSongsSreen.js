@@ -8,6 +8,7 @@ import {
   Text,
   TextInput,
   View,
+  Dimensions,
 } from "react-native";
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { LinearGradient } from "expo-linear-gradient";
@@ -52,23 +53,37 @@ const LikedSongsScreen = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   async function getSavedTracks() {
     const accessToken = await AsyncStorage.getItem("token");
-    const response = await fetch(
-      "https://api.spotify.com/v1/me/tracks?offset=0&limit=50",
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-        // params: {
-        //   limit: 50,
-        // },
+    let offset = 0;
+    const limit = 50;
+    let allTracks = [];
+  
+    while (true) {
+      const response = await fetch(
+        `https://api.spotify.com/v1/me/tracks?offset=${offset}&limit=${limit}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+  
+      if (!response.ok) {
+        throw new Error("Failed to fetch the tracks");
       }
-    );
-
-    if (!response.ok) {
-      throw new Error("failed to fetch the tracks");
+  
+      const data = await response.json();
+      const { items } = data;
+  
+      if (items.length === 0) {
+        // No more tracks to fetch
+        break;
+      }
+  
+      allTracks = [...allTracks, ...items];
+      offset += limit;
     }
-    const data = await response.json();
-    setSavedTracks(data.items);
+  
+    setSavedTracks(allTracks);
   }
   useEffect(() => {
     getSavedTracks();
@@ -199,6 +214,8 @@ const LikedSongsScreen = () => {
     setInput(text);
     debouncedSearch(text);
   };
+  const screenHeight = Dimensions.get('window').height;
+  const scrollViewHeight = screenHeight * 0.7;
   return (
     <>
       <LinearGradient colors={["#614385", "#516395"]} style={{ flex: 1 }}>
@@ -293,11 +310,7 @@ const LikedSongsScreen = () => {
             <View
               style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
             >
-              <MaterialCommunityIcons
-                name="cross-bolnisi"
-                size={24}
-                color="#1DB954"
-              />
+              <Entypo name="shuffle" size={24} color="#1DB954" />
               <Pressable
                 onPress={playTrack}
                 style={{
@@ -313,7 +326,7 @@ const LikedSongsScreen = () => {
               </Pressable>
             </View>
           </Pressable>
-
+          <ScrollView style={[styles.flatListContainer, { height: scrollViewHeight }]}>
           {searchedTracks.length === 0 ? (
             <ActivityIndicator size="large" color="gray" /> // Show a loading indicator while data is being fetched
           ) : (
@@ -325,10 +338,12 @@ const LikedSongsScreen = () => {
                   item={item}
                   onPress={play}
                   isPlaying={item === currentTrack}
+                  contentContainerStyle={styles.flatListContentContainer}
                 />
               )}
             />
           )}
+          </ScrollView>
         </ScrollView>
       </LinearGradient>
 
@@ -549,5 +564,13 @@ const styles = StyleSheet.create({
   progressbar: {
     height: "100%",
     backgroundColor: "white",
+  },
+  flatListContainer: {
+    width: '100%',
+  },
+  flatListContentContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

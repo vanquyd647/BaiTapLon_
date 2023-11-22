@@ -39,17 +39,6 @@ const SearchScreen = () => {
   const [totalDuration, setTotalDuration] = useState(0);
   const [currentSound, setCurrentSound] = useState(null);
   const [currentlyPlayingId, setCurrentlyPlayingId] = useState(null);
-  const colors = [
-    "#27374D",
-    "#1D267D",
-    "#BE5A83",
-    "#212A3E",
-    "#917FB3",
-    "#37306B",
-    "#443C68",
-    "#5B8FB9",
-    "#144272",
-  ];  
   
 
   useEffect(() => {
@@ -223,8 +212,13 @@ const SearchScreen = () => {
   return (
    <>
     <LinearGradient colors={["#040306", "#131624"]} style={styles.container}>
-      <ScrollView style={styles.scrollView}>
-        <View style={styles.header}>
+      
+        <View style={{
+                marginTop:50,
+                padding: 12,
+                flexDirection: "row",
+                alignItems: "center",
+                gap: 10,}}>
           <Image
             style={styles.profileImage}
             source={{ uri: userProfile?.images[0].url }}
@@ -242,7 +236,9 @@ const SearchScreen = () => {
               style={styles.searchInput}
             />
           </Pressable>
+          
         </View>
+        <ScrollView >
         {loading ? (
           <ActivityIndicator size="large" color="#ffffff" style={styles.loader} />
         ) : (
@@ -502,15 +498,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  scrollView: {
-    marginTop: 50,
-  },
-  header: {
-    padding: 12,
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
-  },
+
+
   profileImage: {
     width: 40,
     height: 40,

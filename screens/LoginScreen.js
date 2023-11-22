@@ -7,9 +7,9 @@ import { AntDesign } from '@expo/vector-icons';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 
-const CLIENT_ID = "045ca39bfedf4c78af3b4136aa9b8049";
+const CLIENT_ID = "fb1a236871bf4ce0822800333610feef";
 const SPOTIFY_AUTHORIZE_ENDPOINT = "https://accounts.spotify.com/authorize";
-const REDIRECT_URL_AFTER_LOGIN = "http://localhost:19006/callback";
+const REDIRECT_URL_AFTER_LOGIN = "http://localhost:19006/";
 const SPACE_DELIMITER = "%20";
 const SCOPES = [
   "user-read-email",

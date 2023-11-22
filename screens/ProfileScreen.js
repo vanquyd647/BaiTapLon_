@@ -1,12 +1,17 @@
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Image, ScrollView, StyleSheet, Text, View , Pressable} from "react-native";
 import React, { useEffect, useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
+import { AntDesign } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+
 
 const ProfileScreen = () => {
   const [userProfile, setUserProfile] = useState(null);
   const [playlists, setPlaylists] = useState([]);
+  const navigation = useNavigation();
+  
 
   useEffect(() => {
     const getPlaylists = async () => {
@@ -85,16 +90,55 @@ const ProfileScreen = () => {
         >
           Danh sách phát
         </Text>
+
         <View style={{padding:15}}>
+        <View
+        >
+          <Pressable
+          onPress={() => navigation.navigate("Liked")}
+            style={{
+              marginBottom: 10,
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 10,
+              flex: 1,
+              // marginHorizontal: 10,
+              marginVertical: 8,
+              // backgroundColor: "#202020",
+              borderRadius: 4,
+              
+              elevation: 3,
+            }}
+          >
+            <LinearGradient colors={["#33006F", "#FFFFFF"]} style={{ borderRadius: 4 }}>
+              <Pressable
+                style={{
+                  width: 55,
+                  height: 55,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  
+                }}
+              >
+                <AntDesign name="heart" size={24} color="white" />
+              </Pressable>
+            </LinearGradient>
+
+            <Text style={{color:"white",marginTop:7}}>
+              Bài hát đã thích
+            </Text>
+          </Pressable>
+        </View>
           {playlists.map((item, index) => (
             <View style={{flexDirection:"row",alignItems:"center",gap:8,marginVertical:10}}>
+              
               <Image
                 source={{
                   uri:
                     item?.images[0]?.url ||
                     "https://images.pexels.com/photos/3944091/pexels-photo-3944091.jpeg?auto=compress&cs=tinysrgb&w=800",
                 }}
-                style={{ width: 50, height: 50, borderRadius: 4 }}
+                style={{ width: 55, height: 55, borderRadius: 4 }}
               />
               <View>
                 <Text style={{color:"white"}}>{item?.name}</Text>

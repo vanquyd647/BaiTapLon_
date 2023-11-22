@@ -162,9 +162,10 @@ const HomeScreen = () => {
   console.log(recentlyplayed);
   return (
     <LinearGradient colors={["#040306", "#131624"]} style={{ flex: 1 }}>
-      <ScrollView style={{ marginTop: 50 }}>
+      
         <View
           style={{
+            marginTop:50,
             padding: 10,
             flexDirection: "row",
             alignItems: "center",
@@ -199,7 +200,7 @@ const HomeScreen = () => {
             color="white"
           />
         </View>
-
+        <ScrollView >
         <View
           style={{
             marginHorizontal: 12,
@@ -288,17 +289,6 @@ const HomeScreen = () => {
               elevation: 3,
             }}
           >
-            {/* <Image
-              style={{ width: 55, height: 55 }}
-              source={{ uri: "https://i.pravatar.cc/100" }}
-            />
-            <View style={styles.randomArtist}>
-              <Text
-                style={{ color: "white", fontSize: 13, fontWeight: "bold" }}
-              >
-                Hiphop Tamhiza
-              </Text>
-            </View> */}
           </View>
         </View>
         <FlatList
@@ -341,10 +331,10 @@ const HomeScreen = () => {
         <FlatList
           
           data={recentlyplayed}
-          numColumns={2}
-          columnWrapperStyle={{ justifyContent: 'space-around' }}
-          // horizontal
-          // showsHorizontalScrollIndicator={false}
+          horizontal
+          // numColumns={2}
+          // columnWrapperStyle={{ justifyContent: 'space-around' }}
+          showsHorizontalScrollIndicator={false}
           renderItem={({ item, index }) => (
             
             <RecentlyPlayedCard item={item} key={index} />
