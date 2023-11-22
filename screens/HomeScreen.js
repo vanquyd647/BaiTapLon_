@@ -1,17 +1,26 @@
-import ArtistCard from '../components/ArtistCard';
-import RecentlyPlayedCard from '../components/RecentlyPlayedCard';
-import { StyleSheet, Text, View, ScrollView, Image, Pressable, FlatList } from 'react-native'
-import React, {useEffect, useState} from 'react'
-import { useNavigation } from "@react-navigation/native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  ScrollView,
+  Image,
+  Pressable,
+  FlatList,
+} from "react-native";
+import React, { useEffect, useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { AntDesign } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import axios from "axios";
-
+import ArtistCard from "../components/ArtistCard";
+import RecentlyPlayedCard from "../components/RecentlyPlayedCard";
+import { useNavigation } from "@react-navigation/native";
+import SongItem from "../components/SongItem";
 
 const HomeScreen = () => {
-    const [userProfile, setUserProfile] = useState();
+  const [userProfile, setUserProfile] = useState();
   const navigation = useNavigation();
   const [recentlyplayed, setRecentlyPlayed] = useState([]);
   const [topArtists, setTopArtists] = useState([]);
@@ -63,6 +72,36 @@ const HomeScreen = () => {
   useEffect(() => {
     getRecentlyPlayedSongs();
   }, []);
+    const play = async (nextTrack) => {
+    console.log(nextTrack);
+    const preview_url = nextTrack?.track?.preview_url;
+    try {
+      if (currentSound) {
+        await currentSound.stopAsync();
+      }
+      await Audio.setAudioModeAsync({
+        playsInSilentModeIOS: true,
+        staysActiveInBackground: false,
+        shouldDuckAndroid: false,
+      });
+      const { sound, status } = await Audio.Sound.createAsync(
+        {
+          uri: preview_url,
+        },
+        {
+          shouldPlay: true,
+          isLooping: false,
+        },
+        onPlaybackStatusUpdate
+      );
+      onPlaybackStatusUpdate(status);
+      setCurrentSound(sound);
+      setIsPlaying(status.isLoaded);
+      await sound.playAsync();
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
   const renderItem = ({ item }) => {
     return (
       <Pressable
@@ -119,6 +158,7 @@ const HomeScreen = () => {
 
     getTopItems();
   }, []);
+  console.log(topArtists)
   console.log(recentlyplayed);
   return (
     <LinearGradient colors={["#040306", "#131624"]} style={{ flex: 1 }}>
@@ -176,7 +216,7 @@ const HomeScreen = () => {
               borderRadius: 30,
             }}
           >
-            <Text style={{ fontSize: 15, color: "white" }}>Music</Text>
+            <Text style={{ fontSize: 15, color: "white" }}>Nhạc</Text>
           </Pressable>
 
           <Pressable
@@ -187,7 +227,7 @@ const HomeScreen = () => {
             }}
           >
             <Text style={{ fontSize: 15, color: "white" }}>
-              Podcasts & Shows
+              Podcasts 
             </Text>
           </Pressable>
         </View>
@@ -230,7 +270,7 @@ const HomeScreen = () => {
             </LinearGradient>
 
             <Text style={{ color: "white", fontSize: 13, fontWeight: "bold" }}>
-              Liked Songs
+              Bài hát đã thích
             </Text>
           </Pressable>
 
@@ -248,7 +288,7 @@ const HomeScreen = () => {
               elevation: 3,
             }}
           >
-            <Image
+            {/* <Image
               style={{ width: 55, height: 55 }}
               source={{ uri: "https://i.pravatar.cc/100" }}
             />
@@ -258,12 +298,12 @@ const HomeScreen = () => {
               >
                 Hiphop Tamhiza
               </Text>
-            </View>
+            </View> */}
           </View>
         </View>
         <FlatList
           data={recentlyplayed}
-          renderItem={renderItem}
+          renderItem={renderItem}        
           numColumns={2}
           columnWrapperStyle={{ justifyContent: "space-between" }}
         />
@@ -277,7 +317,7 @@ const HomeScreen = () => {
             marginTop: 10,
           }}
         >
-          Your Top Artists
+          Nghệ sĩ hàng đầu
         </Text>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           {topArtists.map((item, index) => (
@@ -295,21 +335,28 @@ const HomeScreen = () => {
             marginTop: 10,
           }}
         >
-          Recently Played
+          Phát gần đây
         </Text>
+        <View >
         <FlatList
+          
           data={recentlyplayed}
-          horizontal
-          showsHorizontalScrollIndicator={false}
+          numColumns={2}
+          columnWrapperStyle={{ justifyContent: 'space-around' }}
+          // horizontal
+          // showsHorizontalScrollIndicator={false}
           renderItem={({ item, index }) => (
+            
             <RecentlyPlayedCard item={item} key={index} />
+            
           )}
         />
+        </View>
       </ScrollView>
     </LinearGradient>
   );
-}
+};
 
-export default HomeScreen
+export default HomeScreen;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

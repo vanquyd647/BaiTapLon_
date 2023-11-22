@@ -39,6 +39,17 @@ const SearchScreen = () => {
   const [totalDuration, setTotalDuration] = useState(0);
   const [currentSound, setCurrentSound] = useState(null);
   const [currentlyPlayingId, setCurrentlyPlayingId] = useState(null);
+  const colors = [
+    "#27374D",
+    "#1D267D",
+    "#BE5A83",
+    "#212A3E",
+    "#917FB3",
+    "#37306B",
+    "#443C68",
+    "#5B8FB9",
+    "#144272",
+  ];  
   
 
   useEffect(() => {
