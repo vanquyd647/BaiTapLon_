@@ -200,7 +200,7 @@ const HomeScreen = () => {
             color="white"
           />
         </View>
-        <ScrollView >
+        <ScrollView style={{marginBottom:50}}>
         <View
           style={{
             marginHorizontal: 12,

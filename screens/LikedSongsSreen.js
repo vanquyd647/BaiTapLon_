@@ -218,8 +218,8 @@ const LikedSongsScreen = () => {
   const scrollViewHeight = screenHeight * 0.7;
   return (
     <>
-      <LinearGradient colors={["#614385", "#516395"]} style={{ flex: 1 }}>
-        <ScrollView style={{ flex: 1, marginTop: 50 }}>
+      <LinearGradient colors={["#040306", "#131624"]} style={{ flex: 1 }}>
+        <View style={{marginTop:50}}>
           <Pressable
             onPress={() => navigation.goBack()}
             style={{ marginHorizontal: 10 }}
@@ -275,8 +275,8 @@ const LikedSongsScreen = () => {
               <Text style={{ color: "white" }}>Sắp xếp</Text>
             </Pressable>
           </Pressable>
-
-          <View style={{ height: 50 }} />
+          </View>
+          <View style={{ height: 5 }} />
           <View style={{ marginHorizontal: 10 }}>
             <Text style={{ fontSize: 18, fontWeight: "bold", color: "white" }}>
               Bài hát đã thích
@@ -344,14 +344,14 @@ const LikedSongsScreen = () => {
             />
           )}
           </ScrollView>
-        </ScrollView>
+        
       </LinearGradient>
 
       {currentTrack && (
         <Pressable
           onPress={() => setModalVisible(!modalVisible)}
           style={{
-            backgroundColor: "#5072A7",
+            backgroundColor: "#020024",
             width: "90%",
             padding: 10,
             marginLeft: "auto",
@@ -402,9 +402,9 @@ const LikedSongsScreen = () => {
         swipeThreshold={200}
       >
         <ModalContent
-          style={{ height: "100%", width: "100%", backgroundColor: "#5072A7" }}
+          style={{ height: "100%", width: "100%", backgroundColor: "#020024" }}
         >
-          <View style={{ height: "100%", width: "100%", marginTop: 40 }}>
+          <View style={{ height: "100%", width: "100%",  }}>
             <Pressable
               style={{
                 flexDirection: "row",
@@ -567,6 +567,7 @@ const styles = StyleSheet.create({
   },
   flatListContainer: {
     width: '100%',
+    // marginBottom:50
   },
   flatListContentContainer: {
     flex: 1,

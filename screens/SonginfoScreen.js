@@ -42,8 +42,8 @@ const SongInfoScreen = () => {
   console.log(tracks);
   return (
     <LinearGradient colors={["#040306", "#131624"]} style={{ flex: 1 }}>
-      <ScrollView style={{ marginTop: 50 }}>
-        <View style={{ flexDirection: "row", padding: 12 }}>
+      
+        <View style={{ flexDirection: "row", padding: 12, marginTop:50 }}>
           <Ionicons
             onPress={() => navigation.goBack()}
             name="arrow-back"
@@ -108,11 +108,7 @@ const SongInfoScreen = () => {
             <View
               style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
             >
-              <MaterialCommunityIcons
-                name="cross-bolnisi"
-                size={24}
-                color="#1DB954"
-              />
+              <Entypo name="shuffle" size={24} color="#1DB954" />
               <Pressable
            
                 style={{
@@ -128,7 +124,7 @@ const SongInfoScreen = () => {
               </Pressable>
             </View>
           </Pressable>
-
+          <ScrollView>
           <View>
               <View style={{marginTop:10,marginHorizontal:12}}>
                   {tracks?.map((track,index) => (

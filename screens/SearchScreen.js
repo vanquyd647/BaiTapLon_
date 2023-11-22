@@ -211,7 +211,7 @@ const SearchScreen = () => {
 
   return (
    <>
-    <LinearGradient colors={["#040306", "#131624"]} style={styles.container}>
+    <LinearGradient colors={["#040306", "#131624"]} style={{flex:1}}>
       
         <View style={{
                 marginTop:50,
@@ -220,27 +220,48 @@ const SearchScreen = () => {
                 alignItems: "center",
                 gap: 10,}}>
           <Image
-            style={styles.profileImage}
+            style={{width: 40,
+              height: 40,
+              borderRadius: 20,
+              resizeMode: "cover",}}
             source={{ uri: userProfile?.images[0].url }}
           />
-          <Text style={styles.title}>Tìm Kiếm</Text>
+          <Text style={{color: "white",
+              fontSize: 16,
+              fontWeight: "bold",}}
+              >Tìm Kiếm</Text>
         </View>
-        <View style={styles.searchBar}>
-          <Pressable style={styles.searchInputWrapper}>
+        <View style={{padding: 10,}}>
+          <Pressable style={{
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 10,
+              backgroundColor: "white",
+              padding: 9,
+              borderRadius: 3,
+              height: 38,
+              width: '100%',
+            }}>
             <AntDesign name="search1" size={20} color="black" />
             <TextInput
               value={input}
               onChangeText={(text) => handleInputChange(text)}
               placeholder="Bạn muốn nghe gì?"
               placeholderTextColor={"black"}
-              style={styles.searchInput}
+              style={{
+                flex: 1,
+                marginLeft: 10,
+                fontWeight: '500',
+                color: 'black',
+                width: '100%',
+              }}
             />
           </Pressable>
           
         </View>
-        <ScrollView >
+        <ScrollView style={{marginBottom:50}}>
         {loading ? (
-          <ActivityIndicator size="large" color="#ffffff" style={styles.loader} />
+          <ActivityIndicator size="large" color="#ffffff" style={{marginTop:20}} />
         ) : (
           <FlatList
             data={searchResults}
@@ -287,7 +308,7 @@ const SearchScreen = () => {
         <Pressable
           onPress={() => setModalVisible(!modalVisible)}
           style={{
-            backgroundColor: "#5072A7",
+            backgroundColor: "#020024",
             width: "90%",
             padding: 10,
             marginLeft: "auto",
@@ -338,9 +359,9 @@ const SearchScreen = () => {
         swipeThreshold={200}
       >
         <ModalContent
-          style={{ height: "100%", width: "100%", backgroundColor: "#5072A7" }}
+          style={{ height: "100%", width: "100%", backgroundColor: "#020024" }}
         >
-          <View style={{ height: "100%", width: "100%", marginTop: 40 }}>
+          <View style={{ height: "100%", width: "100%",  }}>
             <Pressable
               style={{
                 flexDirection: "row",
@@ -495,45 +516,6 @@ const SearchScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-
-
-  profileImage: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    resizeMode: "cover",
-  },
-  title: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  searchBar: {
-    padding: 10,
-  },
-  searchInputWrapper: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
-    backgroundColor: "white",
-    padding: 9,
-    borderRadius: 3,
-    height: 38,
-    width: '100%',
-  },
-  searchInput: {
-    flex: 1,
-    marginLeft: 10,
-    fontWeight: '500',
-    color: 'black',
-    width: '100%',
-  },
-  loader: {
-    marginTop: 20,
-  },
 });
 
 export default SearchScreen;
