@@ -55,6 +55,7 @@ const HomeScreen = () => {
   const [currentSound, setCurrentSound] = useState(null);
   const [currentlyPlayingId, setCurrentlyPlayingId] = useState(null);
   const [backgroundColor, setBackgroundColor] = useState("#0A2647");
+  const [firstFourItems, setFirstFourItems] = useState([]);
   const greetingMessage = () => {
     const currentTime = new Date().getHours();
     if (currentTime < 12) {
@@ -90,7 +91,7 @@ const HomeScreen = () => {
     try {
       const response = await axios({
         method: "GET",
-        url: "https://api.spotify.com/v1/me/player/recently-played?limit=4",
+        url: "https://api.spotify.com/v1/me/player/recently-played?limit=20",
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -103,6 +104,8 @@ const HomeScreen = () => {
       setSavedTracks(trackItems);
       console.log(trackItems)
       console.log(tracks)
+      const firstFour = tracks.slice(0, 4);
+  setFirstFourItems(firstFour);
     } catch (err) {
       console.log(err.message);
     }
@@ -415,7 +418,7 @@ const HomeScreen = () => {
           </View>
         </View>
         <FlatList
-          data={recentlyplayed}
+          data={firstFourItems}
           renderItem={renderItem}        
           numColumns={2}
           columnWrapperStyle={{ justifyContent: "space-between" }}
