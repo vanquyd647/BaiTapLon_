@@ -39,6 +39,18 @@ const SearchScreen = () => {
   const [totalDuration, setTotalDuration] = useState(0);
   const [currentSound, setCurrentSound] = useState(null);
   const [currentlyPlayingId, setCurrentlyPlayingId] = useState(null);
+  const [backgroundColor, setBackgroundColor] = useState("#0A2647");
+  const colors = [
+    "#27374D",
+    "#1D267D",
+    "#BE5A83",
+    "#212A3E",
+    "#917FB3",
+    "#37306B",
+    "#443C68",
+    "#5B8FB9",
+    "#144272",
+  ];
   
 
   useEffect(() => {
@@ -77,6 +89,7 @@ const SearchScreen = () => {
         }
       );
       const data = await response.json();
+      console.log(data)
       setSearchResults(data.tracks.items);
       setSavedTracks(data.tracks.items);
       console.log(data.tracks.items)

@@ -51,6 +51,31 @@ const LikedSongsScreen = () => {
   const [currentTime, setCurrentTime] = useState(0);
   const [totalDuration, setTotalDuration] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [userProfile, setUserProfile] = useState();
+
+  const getProfile = async () => {
+    const accessToken = await AsyncStorage.getItem("token");
+    try {
+      const response = await fetch("https://api.spotify.com/v1/me", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      const data = await response.json();
+      setUserProfile(data);
+      console.log(data)
+      return data;
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+  useEffect(() => {
+    getProfile();
+  }, []);
+
+
+
+
   async function getSavedTracks() {
     const accessToken = await AsyncStorage.getItem("token");
     let offset = 0;
@@ -73,19 +98,21 @@ const LikedSongsScreen = () => {
   
       const data = await response.json();
       const { items } = data;
-  
+      console.log(data.items)
       if (items.length === 0) {
-        // No more tracks to fetch
+        
         break;
       }
   
       allTracks = [...allTracks, ...items];
       offset += limit;
     }
-  
-    setSavedTracks(allTracks);
+    const trackItems = allTracks.map((item) => item.track);
+    setSavedTracks(trackItems);
+    console.log(trackItems)
   }
   useEffect(() => {
+   
     getSavedTracks();
   }, []);
 
@@ -97,7 +124,7 @@ const LikedSongsScreen = () => {
   };
   const play = async (nextTrack) => {
     console.log(nextTrack);
-    const preview_url = nextTrack?.track?.preview_url;
+    const preview_url = nextTrack?.preview_url;
     try {
       if (currentSound) {
         await currentSound.stopAsync();
@@ -206,7 +233,7 @@ const LikedSongsScreen = () => {
   const debouncedSearch = debounce(handleSearch, 800);
   function handleSearch(text) {
     const filteredTracks = savedTracks.filter((item) =>
-      item.track.name.toLowerCase().includes(text.toLowerCase())
+      item.name.toLowerCase().includes(text.toLowerCase())
     );
     setSearchedTracks(filteredTracks);
   }
@@ -370,7 +397,7 @@ const LikedSongsScreen = () => {
           <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
             <Image
               style={{ width: 40, height: 40 }}
-              source={{ uri: currentTrack?.track?.album?.images[0].url }}
+              source={{ uri: currentTrack?.album?.images[0].url }}
             />
             <Text
               numberOfLines={1}
@@ -381,8 +408,8 @@ const LikedSongsScreen = () => {
                 fontWeight: "bold",
               }}
             >
-              {currentTrack?.track?.name} •{" "}
-              {currentTrack?.track?.artists[0].name}
+              {currentTrack?.name} •{" "}
+              {currentTrack?.artists[0].name}
             </Text>
           </View>
 
@@ -422,7 +449,7 @@ const LikedSongsScreen = () => {
               <Text
                 style={{ fontSize: 14, fontWeight: "bold", color: "white" }}
               >
-                {currentTrack?.track?.name}
+                {currentTrack?.name}
               </Text>
 
               <Entypo name="dots-three-vertical" size={24} color="white" />
@@ -433,7 +460,7 @@ const LikedSongsScreen = () => {
             <View style={{ padding: 10 }}>
               <Image
                 style={{ width: "100%", height: 330, borderRadius: 4 }}
-                source={{ uri: currentTrack?.track?.album?.images[0].url }}
+                source={{ uri: currentTrack?.album?.images[0].url }}
               />
               <View
                 style={{
@@ -449,7 +476,7 @@ const LikedSongsScreen = () => {
                     {currentTrack?.track?.name}
                   </Text>
                   <Text style={{ color: "#D3D3D3", marginTop: 4 }}>
-                    {currentTrack?.track?.artists[0].name}
+                    {currentTrack?.artists[0].name}
                   </Text>
                 </View>
 

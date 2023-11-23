@@ -10,14 +10,20 @@ const SongItem = ({ item, onPress, isPlaying }) => {
     setCurrentTrack(item);
     onPress(item)
   } 
+  const handleMoreOptionsPress = () => {
+    // Handle press for more options (dots-three-vertical) independently
+    // Add your logic here
+    console.log('More options pressed for:', item?.track?.name);
+  };
   return (
+    <View>
     <Pressable
     onPress={handlePress}
       style={{ flexDirection: "row", alignItems: "center", padding: 10 }}
     >
       <Image
         style={{ width: 50, height: 50, marginRight: 10 }}
-        source={{ uri: item?.track?.album?.images[0].url }}
+        source={{ uri: item?.album?.images[0].url }}
       />
 
       <View style={{ flex: 1 }}>
@@ -33,10 +39,10 @@ const SongItem = ({ item, onPress, isPlaying }) => {
               : { fontWeight: "bold", fontSize: 14, color: "white" }
           }
         >
-          {item?.track?.name}
+          {item?.name}
         </Text>
         <Text style={{ marginTop: 4, color: "#989898" }}>
-          {item?.track?.artists[0].name}
+          {item?.artists[0].name}
         </Text>
       </View>
 
@@ -49,9 +55,12 @@ const SongItem = ({ item, onPress, isPlaying }) => {
         }}
       >
         <AntDesign name="heart" size={24} color="#1DB954" />
-        <Entypo name="dots-three-vertical" size={24} color="#C0C0C0" />
+        <Pressable onPress={handleMoreOptionsPress}>
+            <Entypo name="dots-three-vertical" size={24} color="#C0C0C0" />
+          </Pressable>  
       </View>
     </Pressable>
+    </View>
   );
 };
 
