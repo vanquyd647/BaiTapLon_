@@ -218,6 +218,7 @@ const HomeScreen = () => {
   };
 
   const renderItem = ({ item }) => {
+    const isPlaying = currentlyPlayingId === item.track.id;
     return (
       
       <Pressable
@@ -235,7 +236,7 @@ const HomeScreen = () => {
         onPress={() => {
           setCurrentTrack(item.track);
           play(item.track);
-          // setCurrentlyPlayingId(item.id); // Set the currently playing item ID
+          setCurrentlyPlayingId(item.track.id);
 
         }}
       >
@@ -248,7 +249,9 @@ const HomeScreen = () => {
         >
           <Text
             numberOfLines={2}
-            style={{ fontSize: 13, fontWeight: "bold", color: "white" }}
+            style={{
+
+                  fontWeight: "bold", fontSize: 13, color: isPlaying ? "#3FFF00" : "white", }}
           >
             {item.track.name}
           </Text>

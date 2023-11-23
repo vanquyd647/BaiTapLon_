@@ -8,6 +8,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 
 
+
+
+
 const CLIENT_ID = "fb1a236871bf4ce0822800333610feef";
 const SPOTIFY_AUTHORIZE_ENDPOINT = "https://accounts.spotify.com/authorize";
 const REDIRECT_URL_AFTER_LOGIN = "http://localhost:19006/";
@@ -50,6 +53,7 @@ const LoginScreen = () => {
       AsyncStorage.setItem("expiresIn", expires_in);
 
       setAccessToken(access_token);
+      console.log(access_token)
     }
   }, []);
 

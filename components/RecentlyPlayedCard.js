@@ -26,7 +26,9 @@ const RecentlyPlayedCard = ({ item }) => {
           marginTop: 10,
         }}
       >
-        {item?.track?.name}
+        {item?.track?.name && item?.track?.name.length > 20
+    ? item.track.name.substring(0, 20) + '...'
+    : item?.track?.name}
       </Text>
     </Pressable>
   );
