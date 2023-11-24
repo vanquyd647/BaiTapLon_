@@ -273,10 +273,7 @@ const SongInfoScreen = () => {
                 setCurrentlyPlayingId(item.id); // Set the currently playing item ID
 
               }} isPlaying={item === currentTrack} style={{ flexDirection: "row", alignItems: "center", padding: 10, }}>
-                {/* <Image
-                  style={{ width: 50, height: 50, marginRight: 10 }}
-                  source={{ uri: item?.album?.images[0].url }}
-                /> */}
+
                 <View style={{ flex: 1 }}>
                 <Text
                   numberOfLines={1}
@@ -327,10 +324,6 @@ const SongInfoScreen = () => {
           }}
         >
           <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
-            {/* <Image
-              style={{ width: 40, height: 40 }}
-              source={{ uri: currentTrack?.album?.images[0].url }}
-            /> */}
             <Text
               numberOfLines={1}
               style={{
@@ -389,10 +382,6 @@ const SongInfoScreen = () => {
             <View style={{ height: 70 }} />
 
             <View style={{ padding: 10 }}>
-              {/* <Image
-                style={{ width: "100%", height: 330, borderRadius: 4 }}
-                source={{ uri: currentTrack?.album?.images[0].url }}
-              /> */}
               <View
                 style={{
                   marginTop: 20,
